@@ -11,10 +11,13 @@ fun main() {
     }
 
     fun winningPossibilities(totalTime: Long, distanceRecord: Long): Int {
-        return (1..<totalTime).count { timeUsed ->
+        var equalPair = 0
+        val winningPairs = (1..totalTime / 2).count { timeUsed ->
             val speed = totalTime - timeUsed
+            if (speed == timeUsed) equalPair++
             timeUsed * speed > distanceRecord
         }
+        return (winningPairs * 2 - equalPair)
     }
 
     fun part1(input: List<String>): Int {
@@ -33,7 +36,10 @@ fun main() {
     }
 
     val input = readInput("Day06")
-    part1(input).println()
-    part2(input).println()
+    measureTimeMillis { part1(input).println() }
+        .also { println("Part 1: ${it}ms") }
+
+    measureTimeMillis { part2(input).println() }
+        .also { println("Part 2: ${it}ms") }
 
 }
